@@ -50,6 +50,12 @@ namespace Lang.Analyzers
                 case '/':
                     token = new Token(TokenType.Divide);
                     break;
+                case '(':
+                    token = new Token(TokenType.Lparen);
+                    break;
+                case ')':
+                    token = new Token(TokenType.Rparen);
+                    break;
                 default:
                     if (char.IsDigit(symbol))
                         token = LexNumber();

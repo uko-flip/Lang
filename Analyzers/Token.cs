@@ -9,7 +9,10 @@ namespace Lang.Analyzers
         Plus,
         Minus,
         Multiply,
-        Divide
+        Divide,
+
+        Lparen,
+        Rparen
 
     }
 
