@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Lang.Analyzers
@@ -38,7 +39,7 @@ namespace Lang.Analyzers
                         break;
                     default:
                         if(char.IsDigit(symbol))
-                            newToken = new Token(TokenType.Number, LexNumber());
+                            newToken = LexNumber();
                         else
                             newToken = new Token(TokenType.NotLexed);
                         break;
@@ -49,25 +50,21 @@ namespace Lang.Analyzers
             return tokens.ToArray();
         }
 
-        private int LexNumber()
+        private Token LexNumber()
         {
-            var number = 0;
-            PreviousSymbol();
-            while(true)
-            {
-                var newSymbol = NextSymbol();
-                if(!char.IsDigit(newSymbol))
-                {
-                    // NextSymbol();
+            var firstChar = CurrentSymbol();
+            if(!char.IsDigit(firstChar))
+                throw new Exception("Char not digit.");
+            var resultString = "";
+            do {
+                var currentChar = CurrentSymbol();
+                if(!char.IsDigit(currentChar))
                     break;
-                }
-                var newNumber = int.Parse(newSymbol.ToString());
-                number *= 10;
-                number += newNumber;
-            }
+                resultString += currentChar.ToString();
+            } while(char.IsDigit(NextSymbol()));
+            var resultNumber = int.Parse(resultString);
             PreviousSymbol();
-            
-            return number;
+            return new Token(TokenType.Number, resultNumber);
         }
 
         private void PreviousSymbol()
