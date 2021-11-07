@@ -20,34 +20,44 @@ namespace Lang.Analyzers
             while(true)
             {
                 var symbol = CurrentSymbol();
-                if(symbol == '\0')
+                Token token;
+                token = GenerateToken();
+                tokens.Add(token);
+                if(token.Type == TokenType.EndOfFile)
                     break;
-                var newToken = new Token(TokenType.NotLexed);
-                switch(symbol)
-                {
-                    case '+':
-                        newToken = new Token(TokenType.Plus);
-                        break;
-                    case '-':
-                        newToken = new Token(TokenType.Minus);
-                        break;
-                    case '*':
-                        newToken = new Token(TokenType.Multiply);
-                        break;
-                    case '/':
-                        newToken = new Token(TokenType.Divide);
-                        break;
-                    default:
-                        if(char.IsDigit(symbol))
-                            newToken = LexNumber();
-                        else
-                            newToken = new Token(TokenType.NotLexed);
-                        break;
-                }
-                tokens.Add(newToken);
                 NextSymbol();
             }
             return tokens.ToArray();
+        }
+
+        private Token GenerateToken()
+        {
+            Token token;
+            char symbol = CurrentSymbol();
+            if (symbol == '\0')
+                return new Token(TokenType.EndOfFile);
+            switch (symbol)
+            {
+                case '+':
+                    token = new Token(TokenType.Plus);
+                    break;
+                case '-':
+                    token = new Token(TokenType.Minus);
+                    break;
+                case '*':
+                    token = new Token(TokenType.Multiply);
+                    break;
+                case '/':
+                    token = new Token(TokenType.Divide);
+                    break;
+                default:
+                    if (char.IsDigit(symbol))
+                        token = LexNumber();
+                    else
+                        token = new Token(TokenType.NotLexed);
+                    break;
+            }
+            return token;
         }
 
         private Token LexNumber()
