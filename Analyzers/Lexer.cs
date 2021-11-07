@@ -32,38 +32,28 @@ namespace Lang.Analyzers
 
         private Token GenerateToken()
         {
-            Token token;
             char symbol = CurrentSymbol();
             if (symbol == '\0')
                 return new Token(TokenType.EndOfFile);
             switch (symbol)
             {
                 case '+':
-                    token = new Token(TokenType.Plus);
-                    break;
+                    return new Token(TokenType.Plus);
                 case '-':
-                    token = new Token(TokenType.Minus);
-                    break;
+                    return new Token(TokenType.Minus);
                 case '*':
-                    token = new Token(TokenType.Multiply);
-                    break;
+                    return new Token(TokenType.Multiply);
                 case '/':
-                    token = new Token(TokenType.Divide);
-                    break;
+                    return new Token(TokenType.Divide);
                 case '(':
-                    token = new Token(TokenType.Lparen);
-                    break;
+                    return new Token(TokenType.Lparen);
                 case ')':
-                    token = new Token(TokenType.Rparen);
-                    break;
+                    return new Token(TokenType.Rparen);
                 default:
                     if (char.IsDigit(symbol))
-                        token = LexNumber();
-                    else
-                        token = new Token(TokenType.NotLexed);
-                    break;
+                        return LexNumber();
+                    return new Token(TokenType.NotLexed);
             }
-            return token;
         }
 
         private Token LexNumber()
