@@ -19,9 +19,7 @@ namespace Lang.Analyzers
             var tokens = new List<Token>();
             while(true)
             {
-                var symbol = CurrentSymbol();
-                Token token;
-                token = GenerateToken();
+                var token = GenerateToken();
                 tokens.Add(token);
                 if(token.Type == TokenType.EndOfFile)
                     break;
