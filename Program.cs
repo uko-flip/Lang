@@ -12,8 +12,8 @@ namespace Lang
             foreach(Token token in lexems)
             {
                 Console.Write($" {token.Type}");
-                if(token.Type == TokenType.Number)
-                    Console.Write($"({token.Number})");
+                if(token.Type == TokenType.Number || token.Type == TokenType.StringLiteral)
+                    Console.Write($"({token.Value})");
             }
 
         }

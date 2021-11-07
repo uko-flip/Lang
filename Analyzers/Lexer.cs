@@ -50,8 +50,20 @@ namespace Lang.Analyzers
                 default:
                     if (char.IsDigit(symbol))
                         return LexNumber();
-                    return new Token(TokenType.NotLexed);
+                    return LexStringLiteral();
             }
+        }
+
+        private Token LexStringLiteral()
+        {
+            var result = "" + CurrentSymbol();
+            NextSymbol();
+            var nextToken = GenerateToken();
+            if(nextToken.Type == TokenType.StringLiteral)
+                result += nextToken.Value;
+            else
+                PreviousSymbol();
+            return new Token(TokenType.StringLiteral, result);
         }
 
         private Token LexNumber()

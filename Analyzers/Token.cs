@@ -6,6 +6,8 @@ namespace Lang.Analyzers
         EndOfFile,
         
         Number,
+        StringLiteral,
+
         Plus,
         Minus,
         Multiply,
@@ -18,12 +20,12 @@ namespace Lang.Analyzers
 
     public class Token
     {
-        public int Number { get; private set; }
+        public object Value { get; private set; }
         public TokenType Type { get; private set; }
 
-        public Token(TokenType type, int number = 0)
+        public Token(TokenType type, object value = null)
         {
-            Number = number;
+            Value = value;
             Type = type;
         }
     }
